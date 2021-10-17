@@ -11,11 +11,9 @@ Shader "Unlit/NewUnlitShader"
 		_ColorEnd ("Color End", Range(0,1)) = 1
     }
 
-// red material
-// green material
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType" = "Opaque" }
 
         Pass
         {
@@ -25,75 +23,78 @@ Shader "Unlit/NewUnlitShader"
 
             #include "UnityCG.cginc"
 
-            float _Value;
-			float4 _ColorA;
+            float _Value; // 1
+			float4 _ColorA; // 2
 			float4 _ColorB;
-            float _ColorStart;
+            float _ColorStart; // 3
             float _ColorEnd;
-			// float _Scale;
-            // float _Offset;
+			float _Scale; // 4
+            float _Offset; // 5
 
-			// Per-vertex mesh data.
+			// Per-vertex mesh data:
             struct MeshData
             {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
+                float2 uv0 : TEXCOORD0;
+
+                // Other possible data we can capture:
                 // float4 tangent : TANGENT;
                 // float4 color : COLOR;
-                float2 uv0 : TEXCOORD0;
                 // float2 uv1 : TEXCOORD1;
             };
 
-            struct Interpolators
+            // Per-fragment interpolated data:
+            struct Interpolated
             {
                 float4 vertex : SV_POSITION;
 				float3 normal : TEXCOORD0;
                 float2 uv : TEXCOORD1;
             };
 
-            // float (32 bit float)
-            // half (16 bit float)
-            // fixed (lower precision), -1 to 1
+            // Data type precision:
+            // * float (32 bit float)
+            // * half (16 bit float)
+            // * fixed (lower precision, accurate for -1 to 1)
 
-            Interpolators vert (MeshData v)
-            {
-                Interpolators o;
-                o.vertex = UnityObjectToClipPos(v.vertex); // Converts local space to clip space.
-                /* o.normal = v.normal; */
-                o.normal = UnityObjectToWorldNormal(v.normal); // Could do this in fragment shader, but runs less frequently in vertex shader.
-                // o.uv = (v.uv0 + _Offset) * _Scale; // passthrough
-                o.uv = v.uv0;
-                return o;
-            }
+            // InverseLerp takes a start value `a`, an end value `b`, and a value `v`,
+            // and returns the ratio of `v`'s covered distance between `a` and `b`.
+            //
+            // This is not built into Unity, so we need to define ourselves.
             float InverseLerp(float a, float b, float v)
             {
-            return (v-a) / (b-a);
+				return (v-a) / (b-a);
 			}
 
-
-            float4 frag (Interpolators i) : SV_Target
+            Interpolated vert (MeshData v)
             {
-				// return float4(1, 0, 0, 1); // red
-				// return _Color;
-            // return float4(i.normal, 1.0); // outputs mango spheres
-            // lerp
-
-// blend between 2 colors based on the X UV coordinate
-            // float4 outColor = lerp(_ColorA, _ColorB, i.uv.x);
-			// return outColor;
-
-// return i.uv.x;
-
-            /* change where gradient starts and ends. */
-			float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x); // i.uv.x isn't clamped to [0,1], need to clamp
-            float4 outColor = lerp(_ColorA, _ColorB, t);
-			return outColor;
-
-			// map the UVs to red and green
-            // return float4(i.uv, 1.0, 1.0);
+                Interpolated o;
+                o.vertex = UnityObjectToClipPos(v.vertex); // Converts local space to clip space.
+                o.normal = UnityObjectToWorldNormal(v.normal); // Transforms normal from object space to world space.
+                o.uv = (v.uv0 + _Offset) * _Scale; // Passthrough.
+                return o;
             }
 
-/* not built into Unity, so we need to define ourselves */
+            float4 frag (Interpolated i) : SV_Target
+            {
+				// Return a passed-in color.
+				return _Color;
+
+                // Gives a "mango sphere" effect.
+				// return float4(i.normal, 1.0); // outputs mango spheres
+
+                // Blend between 2 colors based on the x UV coordinate.
+				// float4 outColor = lerp(_ColorA, _ColorB, i.uv.x);
+				// return outColor;
+
+                // Visualize UV coordinates.
+				// return float4(i.uv, 1.0, 1.0);
+
+                // Change where gradient starts and ends. Note that _ColorStart and _ColorEnd are values between [0,1].
+				float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x); // i.uv.x isn't clamped to [0,1], need to clamp.
+				float4 outColor = lerp(_ColorA, _ColorB, t);
+				return outColor;
+            }
             ENDCG
         }
     }
