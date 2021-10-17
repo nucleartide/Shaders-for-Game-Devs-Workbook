@@ -1,8 +1,8 @@
-Shader "Unlit/NewUnlitShader"
+Shader "Unlit/Freya Tutorial"
 {
     Properties
     {
-		_Value ("Value", Float) = 1.0
+		_Color ("Color", Color) = (1, 1, 0, 1)
 		_ColorA ("Color A", Color) = (1, 1, 1, 1)
 		_ColorB ("Color B", Color) = (1, 1, 1, 1)
         _Scale ("UV Scale", Float) = 1
@@ -23,7 +23,7 @@ Shader "Unlit/NewUnlitShader"
 
             #include "UnityCG.cginc"
 
-            float _Value; // 1
+            float4 _Color; // 1
 			float4 _ColorA; // 2
 			float4 _ColorB;
             float _ColorStart; // 3
