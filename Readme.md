@@ -37,6 +37,17 @@ TODO.
 See [`01_Single_color.shader`](./Assets/Shaders/01_Single_color.shader).
 
 ### 2. Mango shader
+
+See [`02_Mango.shader`](./Assets/Shaders/02_Mango.shader).
+
 ### 3. UV visualization shader
+
+See [`03_UV_visualization.shader`](./Assets/Shaders/03_UV_visualization.shader).
+
 ### 4. Gradient shader
+
+See [`04_Gradient.shader`](./Assets/Shaders/04_Gradient.shader).
+
 ### 5. Gradient shader with start and end positions
+
+See [`05_Gradient_with_start_and_end_positions.shader`](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader).
