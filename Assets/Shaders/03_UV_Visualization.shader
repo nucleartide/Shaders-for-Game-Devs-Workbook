@@ -1,4 +1,4 @@
-Shader "Unlit/Freya Tutorial"
+Shader "Workbook/03 UV Visualization"
 {
     Properties
     {
@@ -78,7 +78,7 @@ Shader "Unlit/Freya Tutorial"
             float4 frag (Interpolated i) : SV_Target
             {
                 // Return a passed-in color.
-                return _Color;
+                // return _Color;
 
                 // Gives a "mango sphere" effect.
                 // return float4(i.normal, 1.0); // outputs mango spheres
@@ -91,9 +91,13 @@ Shader "Unlit/Freya Tutorial"
                 // return float4(i.uv, 1.0, 1.0);
 
                 // Change where gradient starts and ends. Note that _ColorStart and _ColorEnd are values between [0,1].
-                float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x); // i.uv.x isn't clamped to [0,1], need to clamp.
-                float4 outColor = lerp(_ColorA, _ColorB, t);
-                return outColor;
+                // float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x); // i.uv.x isn't clamped to [0,1], need to clamp.
+                // if <0, make it 0. if >1, make it 1. same as Clamp01 in Unity
+                float t = saturate(InverseLerp(_ColorStart, _ColorEnd, i.uv.x)); // i.uv.x isn't clamped to [0,1], need to clamp.
+                // t = frac(t);
+                return t;
+                // float4 outColor = lerp(_ColorA, _ColorB, t);
+                // return outColor;
             }
             ENDCG
         }
