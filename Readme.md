@@ -10,44 +10,16 @@ TODO.
 
 ## Exercises
 
-### 1. Single color shader
-
-> Create a shader that outputs a single color.
-
-### 2. Mango shader
-
-> Create a "mango" shader, such that the interpolated normal of a fragment determines the fragment's color.
-
-### 3. UV visualization shader
-
-> Create a UV visualization shader that visualizes UV coordinates using a fragment's output RGB channels.
-
-### 4. Gradient shader
-
-> Create a gradient shader, where you can blend between start and end colors based on a fragment's UV coordinates.
-
-### 5. Gradient shader with start and end positions
-
-> As an extension to #4, add the ability to customize _where_ the start color begins, and the end color ends. (For example, in #4 the start color displays at `uv.x == 0`. How might you position the start of the gradient differently?)
+1. [Single color shader](./Exercises/01_Single_color.md)
+2. [Mango shader](./Exercises/02_Mango.md)
+3. [UV visualization shader](./Exercises/03_UV_visualization.md)
+4. [Gradient shader](./Exercises/04_Gradient.md)
+5. [Gradient shader with start and end positions](./Exercises/05_Gradient_with_start_and_end_positions.md)
 
 ## Answers
 
-### 1. Single color shader
-
-See [`01_Single_color.shader`](./Assets/Shaders/01_Single_color.shader).
-
-### 2. Mango shader
-
-See [`02_Mango.shader`](./Assets/Shaders/02_Mango.shader).
-
-### 3. UV visualization shader
-
-See [`03_UV_visualization.shader`](./Assets/Shaders/03_UV_visualization.shader).
-
-### 4. Gradient shader
-
-See [`04_Gradient.shader`](./Assets/Shaders/04_Gradient.shader).
-
-### 5. Gradient shader with start and end positions
-
-See [`05_Gradient_with_start_and_end_positions.shader`](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader).
+1. [Single color shader](./Assets/Shaders/01_Single_color.shader)
+2. [Mango shader](./Assets/Shaders/02_Mango.shader)
+3. [UV visualization shader](./Assets/Shaders/03_UV_visualization.shader)
+4. [Gradient shader](./Assets/Shaders/04_Gradient.shader)
+5. [Gradient with start and end positions shader](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader)
