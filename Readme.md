@@ -36,12 +36,12 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 5. [Gradient with start and end positions shader](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader)
 6. (More to come soon...)
 
-## Contributing
+## Updates
 
-Have a practice question you'd like to add? Please feel free to [open a pull request](https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/pulls)!
+To be notified of updates (especially when new exercises are added), please watch this repo. :eyes:
+
+I'll create a [GitHub release](https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/releases), which should show up in your GitHub feed.
 
 ---
 
-> To be notified of updates to this repo (especially when new exercises are added), please watch this repo. :eyes:
->
-> This repo was created by Jason Tu. For more educational content about game dev with Unity, see: [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
+> Jason Tu · [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
