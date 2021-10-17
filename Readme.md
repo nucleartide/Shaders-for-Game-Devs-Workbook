@@ -39,3 +39,9 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 ## Contributing
 
 Have a practice question you'd like to add? Please feel free to [open a pull request](https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/pulls)!
+
+---
+
+> To be notified of updates to this repo (especially when new exercises are added), please watch this repo. :eyes:
+>
+> This repo was created by Jason Tu. For more educational content, see: [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
