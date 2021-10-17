@@ -1,8 +1,8 @@
-# FreyaShadersCourse
+# Shaders for Game Devs: The Missing Workbook
 
 <img src="./Images/book_cover2.png" alt="Shaders for Game Devs book cover" width="600" />
 
-Exercises (in math textbook style) from Freya Holmer's Shaders for Game Devs course.
+> A workbook of exercises to accompany Freya Holmer's [Shaders for Game Devs course](https://www.youtube.com/playlist?list=PLImQaTpSAdsCnJon-Eir92SZMl7tPBS4Z).
 
 ## Motivation
 
