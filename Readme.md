@@ -1,5 +1,7 @@
 # FreyaShadersCourse
 
+![Shaders for Game Devs book cover](./Images/book_cover.png)
+
 Exercises (in math textbook style) from Freya Holmer's Shaders for Game Devs course.
 
 ## Motivation
