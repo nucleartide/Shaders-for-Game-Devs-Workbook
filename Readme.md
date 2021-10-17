@@ -44,4 +44,4 @@ Have a practice question you'd like to add? Please feel free to [open a pull req
 
 > To be notified of updates to this repo (especially when new exercises are added), please watch this repo. :eyes:
 >
-> This repo was created by Jason Tu. For more educational content, see: [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
+> This repo was created by Jason Tu. For more educational content about game dev with Unity, see: [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
