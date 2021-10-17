@@ -16,7 +16,7 @@ Luckily for us, Freya Holmer demystifies the skill in her [comprehensive YouTube
 
 This repo accompanies that video course, and in math textbook style provides a collection of "end of chapter" exercises to apply your understanding of what Freya teaches.
 
-It is mostly drawn from Freya's code demos, but can/will be extended in the future to additional practice questions to build your shader skills.
+It is mostly drawn from Freya's code demos, but can/will be extended in the future to additional practice questions that test your shader skills.
 
 ## Exercises
 
@@ -25,6 +25,7 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 3. [UV visualization shader](./Exercises/03_UV_visualization.md)
 4. [Gradient shader](./Exercises/04_Gradient.md)
 5. [Gradient with start and end positions shader](./Exercises/05_Gradient_with_start_and_end_positions.md)
+6. (More to come soon...)
 
 ## Answers
 
@@ -33,3 +34,8 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 3. [UV visualization shader](./Assets/Shaders/03_UV_visualization.shader)
 4. [Gradient shader](./Assets/Shaders/04_Gradient.shader)
 5. [Gradient with start and end positions shader](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader)
+6. (More to come soon...)
+
+## Contributing
+
+Have a practice question you'd like to add? Please feel free to [open a pull request](https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/pulls)!
