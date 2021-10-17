@@ -2,13 +2,13 @@ Shader "Unlit/Freya Tutorial"
 {
     Properties
     {
-		_Color ("Color", Color) = (1, 1, 0, 1)
-		_ColorA ("Color A", Color) = (1, 1, 1, 1)
-		_ColorB ("Color B", Color) = (1, 1, 1, 1)
+        _Color ("Color", Color) = (1, 1, 0, 1)
+        _ColorA ("Color A", Color) = (1, 1, 1, 1)
+        _ColorB ("Color B", Color) = (1, 1, 1, 1)
         _Scale ("UV Scale", Float) = 1
         _Offset ("UV Offset", Float) = 0
-		_ColorStart ("Color Start", Range(0,1)) = 0
-		_ColorEnd ("Color End", Range(0,1)) = 1
+        _ColorStart ("Color Start", Range(0,1)) = 0
+        _ColorEnd ("Color End", Range(0,1)) = 1
     }
 
     SubShader
@@ -24,14 +24,14 @@ Shader "Unlit/Freya Tutorial"
             #include "UnityCG.cginc"
 
             float4 _Color; // 1
-			float4 _ColorA; // 2
-			float4 _ColorB;
+            float4 _ColorA; // 2
+            float4 _ColorB;
             float _ColorStart; // 3
             float _ColorEnd;
-			float _Scale; // 4
+            float _Scale; // 4
             float _Offset; // 5
 
-			// Per-vertex mesh data:
+            // Per-vertex mesh data:
             struct MeshData
             {
                 float4 vertex : POSITION;
@@ -48,7 +48,7 @@ Shader "Unlit/Freya Tutorial"
             struct Interpolated
             {
                 float4 vertex : SV_POSITION;
-				float3 normal : TEXCOORD0;
+                float3 normal : TEXCOORD0;
                 float2 uv : TEXCOORD1;
             };
 
@@ -63,8 +63,8 @@ Shader "Unlit/Freya Tutorial"
             // This is not built into Unity, so we need to define ourselves.
             float InverseLerp(float a, float b, float v)
             {
-				return (v-a) / (b-a);
-			}
+                return (v-a) / (b-a);
+            }
 
             Interpolated vert (MeshData v)
             {
@@ -77,23 +77,23 @@ Shader "Unlit/Freya Tutorial"
 
             float4 frag (Interpolated i) : SV_Target
             {
-				// Return a passed-in color.
-				return _Color;
+                // Return a passed-in color.
+                return _Color;
 
                 // Gives a "mango sphere" effect.
-				// return float4(i.normal, 1.0); // outputs mango spheres
+                // return float4(i.normal, 1.0); // outputs mango spheres
 
                 // Blend between 2 colors based on the x UV coordinate.
-				// float4 outColor = lerp(_ColorA, _ColorB, i.uv.x);
-				// return outColor;
+                // float4 outColor = lerp(_ColorA, _ColorB, i.uv.x);
+                // return outColor;
 
                 // Visualize UV coordinates.
-				// return float4(i.uv, 1.0, 1.0);
+                // return float4(i.uv, 1.0, 1.0);
 
                 // Change where gradient starts and ends. Note that _ColorStart and _ColorEnd are values between [0,1].
-				float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x); // i.uv.x isn't clamped to [0,1], need to clamp.
-				float4 outColor = lerp(_ColorA, _ColorB, t);
-				return outColor;
+                float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x); // i.uv.x isn't clamped to [0,1], need to clamp.
+                float4 outColor = lerp(_ColorA, _ColorB, t);
+                return outColor;
             }
             ENDCG
         }
