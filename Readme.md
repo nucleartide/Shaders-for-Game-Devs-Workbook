@@ -1,6 +1,6 @@
 # FreyaShadersCourse
 
-![Shaders for Game Devs book cover](./Images/book_cover.png)
+<img src="./Images/book_cover2.png" alt="Shaders for Game Devs book cover" width="300" />
 
 Exercises (in math textbook style) from Freya Holmer's Shaders for Game Devs course.
 
