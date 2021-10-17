@@ -42,6 +42,8 @@ To be notified of updates (especially when new exercises are added), please watc
 
 I'll create a [GitHub release](https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/releases), which should show up in your GitHub feed.
 
+Alternatively, please open an issue or pull request if you have practice exercises to add!
+
 ---
 
 > Jason Tu · [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
