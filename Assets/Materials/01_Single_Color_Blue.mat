@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 01_Single_Color_Blue
+  m_Name: 01_Single_color_Blue
   m_Shader: {fileID: 4800000, guid: 5c0eae654bf794676aadbfac61e6e179, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 30421613}
   m_Layer: 0
-  m_Name: 05_Gradient_with_Start_and_End_Positions
+  m_Name: 05_Gradient_with_start_and_end_positions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 351707320}
   m_Layer: 0
-  m_Name: 03_UV_Visualization
+  m_Name: 03_UV_visualization
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,7 +981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1189248695}
   m_Layer: 0
-  m_Name: 01_Single_Color_Blue
+  m_Name: 01_Single_color_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

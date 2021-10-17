@@ -1,4 +1,4 @@
-Shader "Workbook/01 Single Color"
+Shader "Workbook/01 Single color"
 {
     Properties
     {

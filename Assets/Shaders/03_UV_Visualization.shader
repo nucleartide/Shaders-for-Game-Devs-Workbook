@@ -1,4 +1,4 @@
-Shader "Workbook/03 UV Visualization"
+Shader "Workbook/03 UV visualization"
 {
     Properties
     {

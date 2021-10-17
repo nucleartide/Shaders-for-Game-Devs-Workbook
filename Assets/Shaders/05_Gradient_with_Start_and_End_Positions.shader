@@ -1,4 +1,4 @@
-Shader "Workbook/05 Gradient with Start and End Positions"
+Shader "Workbook/05 Gradient with start and end positions"
 {
     Properties
     {
