@@ -38,12 +38,10 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 
 ## Updates
 
-To be notified of updates (especially when new exercises are added), please watch this repo. :eyes:
+If you'd like to be notified when new exercises are added, please subscribe to my email list: https://jasont.co/
 
-I'll create a [GitHub release](https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/releases), which should show up in your GitHub feed.
-
-Alternatively, please open an issue or pull request if you have practice exercises to add!
+I'll send you a short reminder email when a new section of exercises is released.
 
 ---
 
-> Jason Tu · [YouTube](https://youtube.com/nucleartide) · [Blog](https://jasont.co/) · [Twitter](https://twitter.com/nucleartide)
+> Jason Tu · [Blog](https://jasont.co/) · [YouTube](https://youtube.com/nucleartide) · [Twitter](https://twitter.com/nucleartide)
