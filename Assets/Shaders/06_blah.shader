@@ -1,4 +1,4 @@
-Shader "Workbook/05 Gradient with start and end positions"
+Shader "Workbook/06 blah"
 {
     Properties
     {
@@ -11,11 +11,23 @@ Shader "Workbook/05 Gradient with start and end positions"
     SubShader
     {
     // subshader tags
-        Tags { "RenderType" = "Opaque" }
+        Tags {
+        // tag to inform render pipeline of type
+		"RenderType" = "Transparent" // set this to transparent, mostly for tagging purposes for postprocess FX
+
+        // changes the render order. transparent must be the default
+        // we want this object to render after everything opaque has rendered, because we don't want to destroy our additive effects by messing up the depth buffer
+        "Queue" = "Transparent" // set this to transparent too
+		}
 
 		// pass tags
         Pass
         {
+			Cull Back // back is default value, off for both sides
+            Blend One One // additive
+			// Blend DstColor Zero // multiplicative
+            ZWrite Off // turn off writing to depth buffer
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -65,31 +77,81 @@ Shader "Workbook/05 Gradient with start and end positions"
             {
                 Interpolated o;
                 o.vertex = UnityObjectToClipPos(v.vertex); // Converts local space to clip space.
+                o.normal = UnityObjectToWorldNormal(v.normal);
                 o.uv = v.uv0;
                 return o;
             }
 
             float4 frag (Interpolated i) : SV_Target
             {
-                float t = InverseLerp(_ColorStart, _ColorEnd, i.uv.x);
+				// Neat pulsating effect:
+				float t = abs(frac(i.uv.x * 5) * 2 - 1);
 
+				// Can also do:
+				t = cos(i.uv.x * 25);
+
+				// Or multiply by TAU for a seamless loop (starts and ends with the same value):
+				t = cos(i.uv.x * TAU * 2);
+
+				// Don't forget to shift the range to [0,1]:
+				t = t * 0.5 + 0.5;
+
+				// OR, visualize the y coordinate as well:
+				// float2 t2 = cos((i.uv) * TAU * 2) * 0.5 + 0.5;
+				// return float4(t2, 0, 1);
+
+// nice barber shop swirly effect
+                /*
+                float xOffset = i.uv.y;
+                xOffset = cos(i.uv.y * TAU * 8) * .01; // add some wobble instead
+				t = cos((i.uv.x + xOffset) * TAU * 5) * 0.5 + 0.5;
+				t = cos((i.uv.x + xOffset + _Time.y * .1) * TAU * 5) * 0.5 + 0.5; // trippy
+				return float4(t, 0, 0, 1);
+                */
+
+// create a ring powerup VFX like in dragonball z
+                float xOffset = cos(i.uv.x * TAU * 8) * .01; // add some wobble instead
+				t = cos((i.uv.y + xOffset - _Time.y * .2) * TAU * 5) * 0.5 + 0.5; // trippy
+                t *= 1 - i.uv.y; // have it fade out toward black
+
+                float hackAwayCaps = abs(i.normal.y) < 0.99;
+				return float4(t * hackAwayCaps, 0, 0, 1);
+
+// blending
 /*
-float t = abs(frac(i.uv.x * 5) * 2 - 1);
+src color - the color you computed
+dst color - the screen
+src * a +/- dst * b // you can choose a, b, and the +/-
 
-can also do:
-float t = cos(i.uv.x * 25);
+additive blending, makes things brighter
+    basically adding colors together
+    useful for fire effects
+    is just src * 1 + dst * 1
 
-#define TAU
+multiplicative blending
+    is just src * dst
 
-float t = cos(i.uv.x * TAU * 25);
+define these in Pass {}, but before CGPROGRAM - you are defining a and b
 
-cos(tau * x) -> ensures that something starts and ends with the same value
-cos(tau * x) * 0.5 + 0.5 -> shift the range
+there is a depth buffer that fragment shaders can read/write to, to determine whether to render
 
-float2 t = cos(i.uv.xy * TAU * 25) -> experiment with 2 UVs
-return float4(t.xy, 0, 1) -> visualizes with red and green
-            */
+transparent objects don't write to depth buffer, so as not to occlude things behind it when viewed by camera
+
+cloud particle effects can tank framerate -> rendering lots of transparent stuff, executing fragment shader a lot
+    known as fill rate
+
+order in which objects tend to render
+    skybox
+    opaque (called geometry in render queue)
+    transparent (all additive and transparent)
+    overlays (like lens flares )
+*/
+
+				// return float4(t, 0, 0, 1);
             }
+
+// Exercise: Using UV coordinates, try to recreate this flannel pattern
+            // Exercise: make barber shop swirly effect
             ENDCG
         }
     }
