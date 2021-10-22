@@ -1,4 +1,4 @@
-Shader "Workbook/06 blah"
+Shader "Workbook/09 blah"
 {
     Properties
     {
@@ -26,7 +26,10 @@ Shader "Workbook/06 blah"
 			Cull Back // back is default value, off for both sides
             Blend One One // additive
 			// Blend DstColor Zero // multiplicative
-            ZWrite Off // turn off writing to depth buffer
+            ZWrite Off // turn off writing to depth buffer for transparent objects
+			ZTest LEqual // if depth of this object is <= depth in buffer, show it. otherwise, don't
+// ZTest Always
+// ZTest GEqual // really useful for "ghost" shaders that render occluded things, like mario in super mario sunshine
 
             CGPROGRAM
             #pragma vertex vert
@@ -114,7 +117,13 @@ Shader "Workbook/06 blah"
 				t = cos((i.uv.y + xOffset - _Time.y * .2) * TAU * 5) * 0.5 + 0.5; // trippy
                 t *= 1 - i.uv.y; // have it fade out toward black
 
+
                 float hackAwayCaps = abs(i.normal.y) < 0.99;
+				float waves = t * hackAwayCaps;
+
+float4 gradient = lerp(_ColorA, _ColorB, i.uv.y);
+return gradient * waves; // adds some colors to waves
+
 				return float4(t * hackAwayCaps, 0, 0, 1);
 
 // blending
@@ -145,13 +154,13 @@ order in which objects tend to render
     opaque (called geometry in render queue)
     transparent (all additive and transparent)
     overlays (like lens flares )
+
+transparent shaders still read from depth buffer
 */
 
 				// return float4(t, 0, 0, 1);
             }
 
-// Exercise: Using UV coordinates, try to recreate this flannel pattern
-            // Exercise: make barber shop swirly effect
             ENDCG
         }
     }
