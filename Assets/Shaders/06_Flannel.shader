@@ -26,7 +26,7 @@ Shader "Workbook/06 blah"
 			Cull Back // back is default value, off for both sides
             Blend One One // additive
 			// Blend DstColor Zero // multiplicative
-            ZWrite Off // turn off writing to depth buffer
+            ZWrite Off // turn off writing to depth buffer for transparent objects
 
             CGPROGRAM
             #pragma vertex vert
@@ -150,8 +150,6 @@ order in which objects tend to render
 				// return float4(t, 0, 0, 1);
             }
 
-// Exercise: Using UV coordinates, try to recreate this flannel pattern
-            // Exercise: make barber shop swirly effect
             ENDCG
         }
     }
