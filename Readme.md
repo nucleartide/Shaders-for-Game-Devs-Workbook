@@ -25,6 +25,9 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 3. [UV visualization shader](./Exercises/03_UV_visualization.md)
 4. [Gradient shader](./Exercises/04_Gradient.md)
 5. [Gradient with start and end positions shader](./Exercises/05_Gradient_with_start_and_end_positions.md)
+6. [Flannel shader](./Assets/Exercises/06_Flannel.md)
+7. [Barber shop swirly shader](./Assets/Exercises/07_Barber_shop_swirly.md)
+8. [Ring powerup VFX shader](./Assets/Exercises/08_Ring_powerup.md)
 6. (More to come soon...)
 
 ## Answers
@@ -34,6 +37,9 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 3. [UV visualization shader](./Assets/Shaders/03_UV_visualization.shader)
 4. [Gradient shader](./Assets/Shaders/04_Gradient.shader)
 5. [Gradient with start and end positions shader](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader)
+6. [Flannel shader](./Assets/Shaders/06_Flannel.shader)
+7. [Barber shop swirly shader](./Assets/Shaders/07_Barber_shop_swirly.shader)
+8. [Ring powerup VFX shader](./Assets/Shaders/08_Ring_powerup.shader)
 6. (More to come soon...)
 
 ## Updates
