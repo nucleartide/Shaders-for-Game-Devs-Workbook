@@ -10,4 +10,5 @@ Follow the process below:
 6. [ ] Add an exercise file
 7. [ ] Update the readme with the exercise file
 8. [ ] Update the scene file
-9. [ ] Update the exercise file
+9. [ ] Update the shader file
+10. [ ] Update the exercise file
