@@ -1,4 +1,4 @@
-Shader "Workbook/06 blah"
+Shader "Workbook/07 Barber shop swirly"
 {
     Properties
     {
