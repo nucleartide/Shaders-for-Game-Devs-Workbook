@@ -2,44 +2,51 @@ Shader "Workbook/06 Flannel"
 {
     Properties
     {
-        _ColorA ("Color A", Color) = (1, 1, 1, 1)
-        _ColorB ("Color B", Color) = (1, 1, 1, 1)
-        _ColorStart ("Color Start", Range(0,1)) = 0
-        _ColorEnd ("Color End", Range(0,1)) = 1
     }
 
     SubShader
     {
-    // subshader tags
-        Tags {
-        // tag to inform render pipeline of type
-		"RenderType" = "Transparent" // set this to transparent, mostly for tagging purposes for postprocess FX
+        Tags
+        {
+            // RenderType informs the render pipeline of type.
+            // It's mostly for tagging purposes for info in post-process FX.
+            "RenderType" = "Transparent"
 
-        // changes the render order. transparent must be the default
-        // we want this object to render after everything opaque has rendered, because we don't want to destroy our additive effects by messing up the depth buffer
-        "Queue" = "Transparent" // set this to transparent too
-		}
+            // Mark this object as "Transparent" in order to render after opaque objects have rendered.
+            // This is appropriate for objects that are additively blended.
+            "Queue" = "Transparent"
+        }
 
-		// pass tags
         Pass
         {
-			Cull Back // back is default value, off for both sides
-            Blend One One // additive
-			// Blend DstColor Zero // multiplicative
-            ZWrite Off // turn off writing to depth buffer
+            Cull Back // Back is default value.
+            ZWrite Off // Do not write to depth buffer, so as not to mess up the depth buffer for objects behind this one. (This object is supposed to be transparent.)
+
+            /*
+                general blend equation:
+                    src*a +/- dst*b
+
+                where you choose the constants a and b, as well as +/-
+
+                src color - the computed color of your fragment shader
+                dst color - the current color of the screen at a pixel location
+
+                example: additive blending (Blend One One)
+                    makes things brighter
+                    basically adds colors together
+                    useful for fire effects
+                    is just src*1 + dst*1
+
+                multiplicative blending (Blend DstColor Zero)
+                    is just src*dst + dst*0
+            */
+            Blend One One
 
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
             #include "UnityCG.cginc"
-
             #define TAU 6.28318530718
-
-            float4 _ColorA;
-            float4 _ColorB;
-            float _ColorStart;
-            float _ColorEnd;
 
             // Per-vertex mesh data, auto-filled by Unity
             struct MeshData
@@ -55,103 +62,55 @@ Shader "Workbook/06 Flannel"
             };
 
             // Per-fragment interpolated data:
-            struct Interpolated
+            struct Interpolators
             {
                 float4 vertex : SV_POSITION; // clip space position, sole required field
                 float3 normal : TEXCOORD0;
                 float2 uv : TEXCOORD1;
-                // float2 tangent : TEXCOORD2;
-                // float2 justSomeValues : TEXCOORD3;
             };
 
-            // InverseLerp takes a start value `a`, an end value `b`, and a value `v`,
-            // and returns the ratio of `v`'s covered distance between `a` and `b`.
-            //
-            // This is not built into GLSL, so we need to define the function ourselves.
-            float InverseLerp(float a, float b, float v)
+            Interpolators vert (MeshData v)
             {
-                return (v-a) / (b-a);
-            }
-
-            Interpolated vert (MeshData v)
-            {
-                Interpolated o;
+                Interpolators o;
                 o.vertex = UnityObjectToClipPos(v.vertex); // Converts local space to clip space.
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 o.uv = v.uv0;
                 return o;
             }
 
-            float4 frag (Interpolated i) : SV_Target
+            float4 frag (Interpolators i) : SV_Target
             {
-				// Neat pulsating effect:
-				float t = abs(frac(i.uv.x * 5) * 2 - 1);
+                // Neat pulsating effect:
+                float t = abs(frac(i.uv.x * 5) * 2 - 1);
 
-				// Can also do:
-				t = cos(i.uv.x * 25);
+                // Can also do:
+                t = cos(i.uv.x * 25);
 
-				// Or multiply by TAU for a seamless loop (starts and ends with the same value):
-				t = cos(i.uv.x * TAU * 2);
+                // Or multiply by TAU for a seamless loop (starts and ends with the same value):
+                t = cos(i.uv.x * TAU * 2);
 
-				// Don't forget to shift the range to [0,1]:
-				t = t * 0.5 + 0.5;
+                // Don't forget to shift the range to [0,1]:
+                t = t * 0.5 + 0.5;
 
-				// OR, visualize the y coordinate as well:
-				// float2 t2 = cos((i.uv) * TAU * 2) * 0.5 + 0.5;
-				// return float4(t2, 0, 1);
-
-// nice barber shop swirly effect
-                /*
-                float xOffset = i.uv.y;
-                xOffset = cos(i.uv.y * TAU * 8) * .01; // add some wobble instead
-				t = cos((i.uv.x + xOffset) * TAU * 5) * 0.5 + 0.5;
-				t = cos((i.uv.x + xOffset + _Time.y * .1) * TAU * 5) * 0.5 + 0.5; // trippy
-				return float4(t, 0, 0, 1);
-                */
-
-// create a ring powerup VFX like in dragonball z
-                float xOffset = cos(i.uv.x * TAU * 8) * .01; // add some wobble instead
-				t = cos((i.uv.y + xOffset - _Time.y * .2) * TAU * 5) * 0.5 + 0.5; // trippy
-                t *= 1 - i.uv.y; // have it fade out toward black
-
-                float hackAwayCaps = abs(i.normal.y) < 0.99;
-				return float4(t * hackAwayCaps, 0, 0, 1);
-
-// blending
-/*
-src color - the color you computed
-dst color - the screen
-src * a +/- dst * b // you can choose a, b, and the +/-
-
-additive blending, makes things brighter
-    basically adding colors together
-    useful for fire effects
-    is just src * 1 + dst * 1
-
-multiplicative blending
-    is just src * dst
-
-define these in Pass {}, but before CGPROGRAM - you are defining a and b
-
-there is a depth buffer that fragment shaders can read/write to, to determine whether to render
-
-transparent objects don't write to depth buffer, so as not to occlude things behind it when viewed by camera
-
-cloud particle effects can tank framerate -> rendering lots of transparent stuff, executing fragment shader a lot
-    known as fill rate
-
-order in which objects tend to render
-    skybox
-    opaque (called geometry in render queue)
-    transparent (all additive and transparent)
-    overlays (like lens flares )
-*/
-
-				// return float4(t, 0, 0, 1);
+                // OR, visualize the y coordinate as well:
+                float2 t2 = cos((i.uv) * TAU * 2) * 0.5 + 0.5;
+                return float4(t2, 0, 1);
             }
 
-// Exercise: Using UV coordinates, try to recreate this flannel pattern
-            // Exercise: make barber shop swirly effect
+/*
+
+notes:
+
+* cloud particle effects can tank framerate
+    * rendering lots of transparent stuff executes the fragment shader a lot, known as fill rate
+
+* order in which objects tend to render
+    * skybox
+    * opaque (called geometry in render queue)
+    * transparent (all additively blended and transparent objects)
+    * overlays (for example, lens flares)
+
+*/
             ENDCG
         }
     }
