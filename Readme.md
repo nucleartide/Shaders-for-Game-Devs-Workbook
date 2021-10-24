@@ -28,7 +28,12 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 6. [Flannel shader](./Assets/Exercises/06_Flannel.md)
 7. [Barber shop swirly shader](./Assets/Exercises/07_Barber_shop_swirly.md)
 8. [Ring powerup VFX shader](./Assets/Exercises/08_Ring_powerup.md)
-6. (More to come soon...)
+9. [Ring powerup VFX with custom colors shader](./Assets/Exercises/09_Ring_powerup_with_custom_colors.md)
+10. [Hypnosis shader](./Assets/Exercises/10_Hypnosis.md)
+11. [Primitive water shader](./Assets/Exercises/11_Primitive_water.md)
+12. [Textured plane shader](./Assets/Exercises/12_Textured_plane.md)
+13. [Scrolling texture shader](./Assets/Exercises/13_Scrolling_texture.md)
+14. (More to come soon...)
 
 ## Answers
 
@@ -40,7 +45,12 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 6. [Flannel shader](./Assets/Shaders/06_Flannel.shader)
 7. [Barber shop swirly shader](./Assets/Shaders/07_Barber_shop_swirly.shader)
 8. [Ring powerup VFX shader](./Assets/Shaders/08_Ring_powerup.shader)
-6. (More to come soon...)
+9. [Ring powerup VFX with custom colors shader](./Assets/Shaders/09_Ring_powerup_with_custom_colors.shader)
+10. [Hypnosis shader](./Assets/Shaders/10_Hypnosis.shader)
+11. [Primitive water shader](./Assets/Shaders/11_Primitive_water.shader)
+12. [Textured plane shader](./Assets/Shaders/12_Textured_plane.shader)
+13. [Scrolling texture shader](./Assets/Shaders/13_Scrolling_texture.shader)
+14. (More to come soon...)
 
 ## Updates
 
