@@ -25,7 +25,15 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 3. [UV visualization shader](./Exercises/03_UV_visualization.md)
 4. [Gradient shader](./Exercises/04_Gradient.md)
 5. [Gradient with start and end positions shader](./Exercises/05_Gradient_with_start_and_end_positions.md)
-6. (More to come soon...)
+6. [Flannel shader](./Assets/Exercises/06_Flannel.md)
+7. [Barber shop swirly shader](./Assets/Exercises/07_Barber_shop_swirly.md)
+8. [Ring powerup VFX shader](./Assets/Exercises/08_Ring_powerup.md)
+9. [Ring powerup VFX with custom colors shader](./Assets/Exercises/09_Ring_powerup_with_custom_colors.md)
+10. [Hypnosis shader](./Assets/Exercises/10_Hypnosis.md)
+11. [Primitive water shader](./Assets/Exercises/11_Primitive_water.md)
+12. [Textured plane shader](./Assets/Exercises/12_Textured_plane.md)
+13. [Scrolling texture shader](./Assets/Exercises/13_Scrolling_texture.md)
+14. (More to come soon...)
 
 ## Answers
 
@@ -34,7 +42,15 @@ It is mostly drawn from Freya's code demos, but can/will be extended in the futu
 3. [UV visualization shader](./Assets/Shaders/03_UV_visualization.shader)
 4. [Gradient shader](./Assets/Shaders/04_Gradient.shader)
 5. [Gradient with start and end positions shader](./Assets/Shaders/05_Gradient_with_start_and_end_positions.shader)
-6. (More to come soon...)
+6. [Flannel shader](./Assets/Shaders/06_Flannel.shader)
+7. [Barber shop swirly shader](./Assets/Shaders/07_Barber_shop_swirly.shader)
+8. [Ring powerup VFX shader](./Assets/Shaders/08_Ring_powerup.shader)
+9. [Ring powerup VFX with custom colors shader](./Assets/Shaders/09_Ring_powerup_with_custom_colors.shader)
+10. [Hypnosis shader](./Assets/Shaders/10_Hypnosis.shader)
+11. [Primitive water shader](./Assets/Shaders/11_Primitive_water.shader)
+12. [Textured plane shader](./Assets/Shaders/12_Textured_plane.shader)
+13. [Scrolling texture shader](./Assets/Shaders/13_Scrolling_texture.shader)
+14. (More to come soon...)
 
 ## Updates
 
