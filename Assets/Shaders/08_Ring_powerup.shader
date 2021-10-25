@@ -10,6 +10,9 @@ Shader "Workbook/08 Ring powerup"
 
     SubShader
     {
+        // TODO list:
+        // https://github.com/nucleartide/Shaders-for-Game-Devs-Workbook/issues/5
+
     // subshader tags
         Tags {
         // tag to inform render pipeline of type
