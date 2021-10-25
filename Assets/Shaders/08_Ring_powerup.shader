@@ -87,11 +87,11 @@ Shader "Workbook/08 Ring powerup"
             {
                 float xOffset = cos(i.uv.x * TAU * 8) * .01; // wobbly x-offset
 
-				float t = cos((i.uv.y + xOffset - _Time.y * .2) * TAU * 5) * 0.5 + 0.5; // trippy
+                float t = cos((i.uv.y + xOffset - _Time.y * .2) * TAU * 5) * 0.5 + 0.5; // trippy
                 t *= 1 - i.uv.y; // have it fade out toward black
 
                 float hackAwayCaps = abs(i.normal.y) < 0.99;
-				return float4(t * hackAwayCaps, 0, 0, 1);
+                return float4(t * hackAwayCaps, 0, 0, 1);
             }
             ENDCG
         }

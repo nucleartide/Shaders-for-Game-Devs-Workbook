@@ -9,8 +9,8 @@ Shader "Workbook/13 Scrolling texture"
     {
         Tags
         {
-			"RenderType" = "Opaque"
-		}
+            "RenderType" = "Opaque"
+        }
 
         Pass
         {

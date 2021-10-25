@@ -86,9 +86,9 @@ Shader "Workbook/07 Barber shop swirly"
             {
                 float xOffset = i.uv.y;
                 // xOffset = cos(i.uv.y * TAU * 8) * .01; // make the x offset a wobble instead
-				float t = cos((i.uv.x + xOffset) * TAU * 5) * 0.5 + 0.5;
-				t = cos((i.uv.x + xOffset + _Time.y * .1) * TAU * 5) * 0.5 + 0.5; // make it move
-				return float4(t, 0, 0, 1);
+                float t = cos((i.uv.x + xOffset) * TAU * 5) * 0.5 + 0.5;
+                t = cos((i.uv.x + xOffset + _Time.y * .1) * TAU * 5) * 0.5 + 0.5; // make it move
+                return float4(t, 0, 0, 1);
             }
 
 /*
