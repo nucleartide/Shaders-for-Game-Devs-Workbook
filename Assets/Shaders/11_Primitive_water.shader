@@ -2,28 +2,25 @@ Shader "Workbook/11 Primitive water"
 {
     Properties
     {
-    _WaveAmplitude ("Wave Amplitude", Range(0, 0.2)) = 0.1
+        _WaveAmplitude ("Wave Amplitude", Range(0, 0.2)) = 0.1
     }
 
     SubShader
     {
-    // subshader tags
-        Tags {
-			"RenderType" = "Opaque" // set this to transparent, mostly for tagging purposes for postprocess FX
-		}
+        Tags
+        {
+            "RenderType" = "Opaque"
+        }
 
-		// pass tags
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
             #include "UnityCG.cginc"
-
             #define TAU 6.28318530718
 
-float _WaveAmplitude;
+            float _WaveAmplitude;
 
             // Per-vertex mesh data, auto-filled by Unity
             struct MeshData
@@ -44,46 +41,40 @@ float _WaveAmplitude;
                 float4 vertex : SV_POSITION; // clip space position, sole required field
                 float3 normal : TEXCOORD0;
                 float2 uv : TEXCOORD1;
-                // float2 tangent : TEXCOORD2;
-                // float2 justSomeValues : TEXCOORD3;
             };
-float GetWave(float2 uv)
-{
-				float2 distFromCenter = length(uv * 2 - 1);
-				float wave = cos((distFromCenter - _Time.y * 0.1) * TAU * 5) * 0.5 + 0.5;
-				wave *= 1-distFromCenter;
-				return wave;
-}
 
+            float GetWave(float2 uv)
+            {
+                float2 distFromCenter = length(uv * 2 - 1);
+                float wave = cos((distFromCenter - _Time.y * 0.1) * TAU * 5) * 0.5 + 0.5;
+                wave *= 1-distFromCenter;
+                return wave;
+            }
 
-
+            // Note: for this vertex shader to work, your plane must have enough vertices.
+            // To make a plane with enough vertices, download ProBuilder from the Package Manager,
+            // and make a plane with 100x100 width x height segments.
+            // ProBuilder is a free package offered by Unity.
             Interpolated vert (MeshData v)
             {
+                // float wave = cos((v.uv0.y - _Time.y * 0.1) * TAU * 5);
+                // float wave2 = cos((v.uv0.x - _Time.y * 0.1) * TAU * 5);
+                // v.vertex.y = wave * wave2 * _WaveAmplitude;
+
+                // Cleaner:
+                v.vertex.y = GetWave(v.uv0) * _WaveAmplitude;
+
                 Interpolated o;
-
-// exercise: make a very basic, rudimentary water shader
-/*
-float wave = cos((v.uv0.y - _Time.y * 0.1) * TAU * 5);
-float wave2 = cos((v.uv0.x - _Time.y * 0.1) * TAU * 5);
-v.vertex.y = wave * wave2 * _WaveAmplitude;
-*/
-
-// noise in shaders -> not that useful for real time, useful for shadertoy
-v.vertex.y = GetWave(v.uv0) * _WaveAmplitude;
-
                 o.vertex = UnityObjectToClipPos(v.vertex); // Converts local space to clip space.
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 o.uv = v.uv0;
                 return o;
             }
 
-			// exercise: make a hypnosis shader
             float4 frag (Interpolated i) : SV_Target
             {
-            return GetWave(i.uv);
+                return GetWave(i.uv);
             }
-
-// exercise: write a GetWave() function, and use it in your vertex shader
 
             ENDCG
         }
