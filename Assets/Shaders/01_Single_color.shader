@@ -30,8 +30,8 @@ Shader "Workbook/01 Single color"
             struct Interpolated
             {
                 float4 vertex : SV_POSITION;
-                float3 normal : TEXCOORD0;
-                float2 uv : TEXCOORD1;
+                // float3 normal : TEXCOORD0;
+                // float2 uv : TEXCOORD1;
             };
 
             Interpolated vert (MeshData v)
