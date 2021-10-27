@@ -44,7 +44,7 @@ Shader "Workbook/07 Barber shop swirly"
                 multiplicative blending (Blend DstColor Zero)
                     is just src*dst + dst*0
             */
-            Blend One One
+            // Blend One One
 
             CGPROGRAM
             #pragma vertex vert
