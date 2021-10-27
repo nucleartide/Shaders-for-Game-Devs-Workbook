@@ -1,5 +1,3 @@
-using UV coordinates, try to re-create this flannel pattern
-
 # 6. Flannel shader
 
 "Flannel" is a word used to refer to clothes with a checkered pattern:
