@@ -12,3 +12,5 @@ Follow the process below:
 8. [ ] Update the scene file
 9. [ ] Update the shader file
 10. [ ] Update the exercise file
+
+TODO: automate this using an editor script.
