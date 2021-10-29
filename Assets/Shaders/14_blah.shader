@@ -1,11 +1,20 @@
 Shader "Workbook/14 blah"
 {
+    // TODO(jason): might be good to capture notes in a comment block so i don't lose them
+    // initialize with low level of detail mipmaps, and stream in more detailed textures later
+    // how unreal engine 3 works ^^
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
         // "white" | "black" | "gray" | "bump"
         _Pattern("Pattern", 2D) = "white" {} // texture mask
         _Rock("Rock", 2D) = "white" {}
+        _MipSampleLevel ("MIP", Float) = 0 // 0 is highest level of detail, higher numbers step into lower levels of detail
+        // mip levels are useful for showing the right amount of detail depending on distance
+        // at highest level of detail, texture can be noisy at a distance,
+        // at low level of detail, texture can be blurry, but look fine at a distance
+        // mip levels: sometimes used in image-based lighting
+        // vertex shader cannot figure out mip levels
     }
 
     SubShader
@@ -26,6 +35,7 @@ Shader "Workbook/14 blah"
             sampler2D _MainTex;
             sampler2D _Pattern;
             sampler2D _Rock;
+            float _MipSampleLevel;
             // float4 _MainTex_ST; // optional, tiling and offset of texture
 
             // Per-vertex mesh data, auto-filled by Unity
@@ -81,7 +91,10 @@ Shader "Workbook/14 blah"
                 // sample from the texture using world space coordinates instead of vertex UV coordinates.
                 // easier to do for terrain, where you aren't doing detailed texture mapping, and you simply want a texture to repeat.
                 float4 cobble = tex2D(_MainTex, topDownProjection); // instead of using UVs, use world space coords
-                float4 rock = tex2D(_Rock, topDownProjection);
+                float4 cobble2 = tex2Dlod(_MainTex, float4(topDownProjection, _MipSampleLevel.xx) );
+                // for lod to work, you must have generated mipmaps for the texture
+                // inspect your texture in Unity to confirm that mipmaps are generated
+                float4 rock = tex2Dlod(_Rock, float4(topDownProjection, _MipSampleLevel.xx));
                 // float4 col2 = tex2D(_Pattern, i.uv); // instead of using UVs, use world space coords
                 // return col2;
 
@@ -96,7 +109,7 @@ float4 finalColor = lerp(float4(1,0,0,1), cobble, pattern);
 // return finalColor;
 
 // blend between 2 textures.
-finalColor = lerp(rock, cobble, pattern);
+finalColor = lerp(rock, cobble2, pattern);
 return finalColor;
 
 // turn off compression for crisper quality
