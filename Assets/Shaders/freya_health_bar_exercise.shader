@@ -96,8 +96,10 @@ float amountOfGreen = t;
                 // if (!isFill) discard; // alt way using if statement
 
 // tex2D(_HealthBarTexture, float2(_Health, i.uv.y));
-                float4 col = isFill * tex2D(_HealthBarTexture, float2(_Health * .99, i.uv.y));
-                return col;
+                float3 col = isFill * tex2D(_HealthBarTexture, float2(_Health * .99, i.uv.y));
+                float isCritical = when_le(_Health, _CriticalThreshold);
+                float alpha = 1-isCritical * sin(_Time.y * 12);
+                return float4(col, isFill * alpha);
 
                 float4 finalColor = float4(amountOfRed, amountOfGreen, 0, isFill);
                 return finalColor;
