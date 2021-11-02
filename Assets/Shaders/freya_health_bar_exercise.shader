@@ -8,6 +8,7 @@ Shader "freya shader course health bar"
         _CriticalThreshold ("Critical Threshold", Range(0,1)) = 0.2
         // assume that _HealthyThreshold is > _CriticalThreshold
         _HealthyThreshold ("Healthy Threshold", Range(0,1)) = 0.8
+        _HealthBarTexture("Texture", 2D) = "white" {}
     }
 
     SubShader
@@ -19,6 +20,8 @@ Shader "freya shader course health bar"
 
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha // alpha blending
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -29,6 +32,9 @@ Shader "freya shader course health bar"
             float4 _EndColor;
             float _CriticalThreshold;
             float _HealthyThreshold;
+
+            sampler2D _HealthBarTexture;
+            float4 _HealthBarTexture_ST; // optional, tiling and offset of texture
 
             struct MeshData
             {
@@ -46,7 +52,7 @@ Shader "freya shader course health bar"
             {
                 Interpolators o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _HealthBarTexture);
                 return o;
             }
 
@@ -86,7 +92,14 @@ float amountOfGreen = t;
                 float isFill = when_le(i.uv.x, _Health);
                 amountOfRed = isFill * (1 - t);
                 amountOfGreen = isFill * t;
-                float4 finalColor = float4(amountOfRed, amountOfGreen, 0, 1);
+
+                // if (!isFill) discard; // alt way using if statement
+
+// tex2D(_HealthBarTexture, float2(_Health, i.uv.y));
+                float4 col = isFill * tex2D(_HealthBarTexture, float2(_Health * .99, i.uv.y));
+                return col;
+
+                float4 finalColor = float4(amountOfRed, amountOfGreen, 0, isFill);
                 return finalColor;
             }
             ENDCG
