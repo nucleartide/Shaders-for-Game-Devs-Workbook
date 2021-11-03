@@ -8,7 +8,7 @@ Shader "freya shader course health bar"
         _CriticalThreshold ("Critical Threshold", Range(0,1)) = 0.2
         // assume that _HealthyThreshold is > _CriticalThreshold
         _HealthyThreshold ("Healthy Threshold", Range(0,1)) = 0.8
-        _HealthBarTexture("Texture", 2D) = "white" {}
+        [NoScaleOffset] _HealthBarTexture("Texture", 2D) = "white" {}
     }
 
     SubShader
@@ -108,3 +108,12 @@ float amountOfGreen = t;
         }
     }
 }
+
+/*
+
+concept of "mask" in shaders
+    single float value changes across pixels
+
+tired, 6:00 in
+
+*/
