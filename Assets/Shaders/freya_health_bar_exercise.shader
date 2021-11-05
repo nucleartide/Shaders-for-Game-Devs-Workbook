@@ -73,11 +73,23 @@ float when_le(float x, float y) {
                 return (v-a) / (b-a);
             }
 
+/// freya's solution, which has a stronger grasp of the transformations involved
+float4 solution1(float2 uv)
+{
+    float health = floor(_Health*8)/8;
+    float healthBarMask = health > uv.x;
 
+float3 healthBarColor = lerp(float3(1,0,0), float3(0,1,0), health);
+float3 bgColor = float3(0,0,0);
+float3 outColor = lerp(bgColor, healthBarColor, healthBarMask);
+
+    return float4(outColor, 1);
+}
 
 // https://theorangeduck.com/page/avoiding-shader-conditionals
             float4 frag (Interpolators i) : SV_Target
             {
+return solution1(i.uv);
                 // if below critical threshold, all red
                 // if below healthy threshold, normal formula
                 // else, all green
@@ -101,6 +113,7 @@ float amountOfGreen = t;
                 float alpha = 1-isCritical * sin(_Time.y * 12);
                 return float4(col, isFill * alpha);
 
+
                 float4 finalColor = float4(amountOfRed, amountOfGreen, 0, isFill);
                 return finalColor;
             }
@@ -115,5 +128,12 @@ concept of "mask" in shaders
     single float value changes across pixels
 
 tired, 6:00 in
+
+horizontal space vs linear space
+    choose function depending on your mask (linear/horizontal, distance from center (radial gradient), angular gradient)
+
+relatively easy to swap out the input mask, to make a radial health bar, or angular health bar
+
+for a healthbar that increases in chunks, posterize coordintate values - step function?
 
 */
