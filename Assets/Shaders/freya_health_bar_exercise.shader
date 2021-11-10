@@ -15,12 +15,15 @@ Shader "freya shader course health bar"
     {
         Tags
         {
-            "RenderType"="Opaque"
+            // "RenderType"="Opaque"
+            "RenderType" = "Transparent"
+            "Queue" = "Transparent"
         }
 
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha // alpha blending
+            ZWrite Off // don't want transparent shaders to write to depth buffer
+            Blend SrcAlpha OneMinusSrcAlpha // alpha blending, this is basically a lerp
 
             CGPROGRAM
             #pragma vertex vert
@@ -78,18 +81,47 @@ float4 solution1(float2 uv)
 {
     float health = floor(_Health*8)/8;
     float healthBarMask = health > uv.x;
+clip(healthBarMask - 0.5); // as early as possible fo roptimization
 
-float3 healthBarColor = lerp(float3(1,0,0), float3(0,1,0), health);
+float tHealthColor = saturate(InverseLerp(0.2, 0.8, _Health));
+float3 healthBarColor = lerp(float3(1,0,0), float3(0,1,0), tHealthColor);
+
+
 float3 bgColor = float3(0,0,0);
 float3 outColor = lerp(bgColor, healthBarColor, healthBarMask);
 
     return float4(outColor, 1);
 }
 
+float4 solution2(float2 uv)
+{
+    float health = floor(_Health*8)/8;
+    float healthBarMask = health > uv.x;
+
+float tHealthColor = saturate(InverseLerp(0.2, 0.8, _Health));
+float3 healthBarColor = lerp(float3(1,0,0), float3(0,1,0), tHealthColor);
+
+float3 bgColor = float3(0,0,0);
+float3 outColor = lerp(bgColor, healthBarColor, healthBarMask);
+
+    return float4(healthBarColor * healthBarMask, 1);
+}
+
+// texture setting clamp mode should not be "wrapped" (which gives you the colors at the end)
+// but instead be "clamp", to eliminate the ending colors
+float4 solution3(float2 uv)
+{
+    float healthBarMask = _Health > uv.x;
+    float3 healthBarColor = tex2D(_HealthBarTexture, float2(_Health, uv.y));
+    return float4(healthBarColor * healthBarMask, 1);
+}
+
 // https://theorangeduck.com/page/avoiding-shader-conditionals
             float4 frag (Interpolators i) : SV_Target
             {
-return solution1(i.uv);
+                return solution3(i.uv);
+
+// return solution2(i.uv);
                 // if below critical threshold, all red
                 // if below healthy threshold, normal formula
                 // else, all green
