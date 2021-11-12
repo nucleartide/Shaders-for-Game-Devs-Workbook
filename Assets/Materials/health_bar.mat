@@ -68,7 +68,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Health: 0.91
+    - _Health: 1
     - _HealthyThreshold: 0.8
     - _Metallic: 0
     - _Mode: 0

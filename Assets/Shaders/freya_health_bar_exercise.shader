@@ -116,10 +116,21 @@ float4 solution3(float2 uv)
     return float4(healthBarColor * healthBarMask, 1);
 }
 
+float4 solution4(float2 uv)
+{
+    float healthBarMask = _Health > uv.x;
+    float3 healthBarColor = tex2D(_HealthBarTexture, float2(_Health, uv.y));
+
+    float flash = cos(_Time.y * 4) * .1;
+
+// multiply to scale the color, instead of potentially changing the hue by adding with +
+    return float4(healthBarColor * flash, 1);
+}
+
 // https://theorangeduck.com/page/avoiding-shader-conditionals
             float4 frag (Interpolators i) : SV_Target
             {
-                return solution3(i.uv);
+                return solution4(i.uv);
 
 // return solution2(i.uv);
                 // if below critical threshold, all red
