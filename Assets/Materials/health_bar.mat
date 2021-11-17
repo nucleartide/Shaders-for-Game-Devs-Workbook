@@ -60,6 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _BorderSize: 0.287
     - _BumpScale: 1
     - _CriticalThreshold: 0.5
     - _Cutoff: 0.5
@@ -68,7 +69,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Health: 0.19
+    - _Health: 0.22
     - _HealthyThreshold: 0.8
     - _Metallic: 0
     - _Mode: 0

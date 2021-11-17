@@ -9,6 +9,7 @@ Shader "freya shader course health bar"
         // assume that _HealthyThreshold is > _CriticalThreshold
         _HealthyThreshold ("Healthy Threshold", Range(0,1)) = 0.8
         [NoScaleOffset] _HealthBarTexture("Texture", 2D) = "white" {}
+        _BorderSize ("_BorderSize", Range(0,.5)) = .1
     }
 
     SubShader
@@ -37,6 +38,7 @@ float _CriticalThreshold;
 float _HealthyThreshold;
 sampler2D _HealthBarTexture;
 float4 _HealthBarTexture_ST; // optional, tiling and offset of texture
+float _BorderSize;
 
 struct MeshData
 {
@@ -138,8 +140,25 @@ float4 solution5(float2 uv)
     float sdf = distance(coords, pointOnLineSegment) * 2 - 1;
     clip(-sdf);
 
+    float borderSdf = sdf + _BorderSize;
+
+    // screen space partial derivative of signed distance field
+    float pd = fwidth(borderSdf);
+    // length(float2(ddx(borderSdf), ddy(borderSdf)))
+    // float borderMask = step(0, -borderSdf);
+    float borderMask = 1-saturate(borderSdf / pd); // saturate() means clamp
+
     // old stuff
-    return solution4(uv);
+    float healthBarMask = _Health > uv.x;
+    float3 healthBarColor = tex2D(_HealthBarTexture, float2(_Health, uv.y));
+
+    if (_Health < 0.2) {
+        float flash = cos(_Time.y * 4) * .4 + 1;
+        healthBarColor *= flash;
+    }
+
+    // multiply to scale the color, instead of potentially changing the hue by adding with +
+    return float4(healthBarColor * healthBarMask * borderMask, 1);
 
 // for custom radius, you need to find the distance to a rectangle, not just a line segment
 
@@ -195,5 +214,20 @@ horizontal space vs linear space
 relatively easy to swap out the input mask, to make a radial health bar, or angular health bar
 
 for a healthbar that increases in chunks, posterize coordintate values - step function?
+
+freya's fractal demo:
+
+
+*/
+
+/*
+
+lighting:
+
+* "matte" dull shading - diffuse
+* specular lighting - gloss lighting
+* max(0, n dot L)
+    * Lambertian lighting
+    * simple diffuse lighting
 
 */
