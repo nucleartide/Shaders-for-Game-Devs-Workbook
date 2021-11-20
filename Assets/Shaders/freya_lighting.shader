@@ -2,6 +2,7 @@ Shader "Unlit/freya_lighting"
 {
     Properties
     {
+        _Gloss ("Gloss", Float) = 1
     }
 
     SubShader
@@ -34,6 +35,7 @@ struct Interpolators
 
 sampler2D _MainTex;
 float4 _MainTex_ST;
+float _Gloss;
 
 Interpolators vert (MeshData v)
 {
@@ -48,13 +50,19 @@ Interpolators vert (MeshData v)
 fixed4 frag (Interpolators i) : SV_Target
 {
     // diffuse lighting
-    float3 N = i.normal;
+    float3 N = normalize(i.normal); // because the normal is not necessarily normalized when interpolated
     float3 L = _WorldSpaceLightPos0.xyz; // actually a direction
     // float diffuseLight = max(0, dot(N, L)); // saturate() does the same as max(0, ...)
     float3 diffuseLight = saturate(dot(N, L)) * _LightColor0.xyz;
 
     // specular lighting
-    return float4(i.worldPos, 1);
+    float3 V = normalize(_WorldSpaceCameraPos - i.worldPos);
+    float3 R = reflect(-L, N);
+    float3 specularLight = saturate(dot(V, R));
+
+    specularLight = pow(specularLight, _Gloss); // sometimes called the specular exponent
+
+    return float4(specularLight.xxx, 1);
 
     return float4(diffuseLight, 1);
 }
